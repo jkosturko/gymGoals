@@ -1,20 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../database');
-// var bodyParser = require('body-parser');
 
+// When Post request is made to app, save
+// json to database 
 router.post('/', function(req, res) {
-    console.log('req.body', req.body);
     db.weeks.save(req.body);
-
-    //stop post some how
+    res.send(req.body);
 });
 
-/* GET users listing. */
+/* GET weeks listing. */
 router.get('/', function(req, res) {
     db.weeks.find(function(err, weeks) {
-        if (err)
-            console.log('Error finding weeks in db');
+        if (err) console.log('Error finding weeks in db');
 
         res.json(weeks);
     });
