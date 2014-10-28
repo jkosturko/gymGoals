@@ -4,6 +4,17 @@ block content
   h1 Per Week App
 
   script(type="text/x-handlebars", id="weektemplate")
-    {{hey}}
+    {{title}} 
 
- 
+    //- Output if the button is pressed or not 
+    {{#each data}}
+    {{#if this}}
+    span.button.pressed {{@key}}
+    {{else}}
+    span.button {{@key}}
+    {{/if}}
+    {{/each}}
+
+    {{#if completed}}
+    i.icon-check
+    {{/if}}

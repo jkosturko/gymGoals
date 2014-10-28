@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var middleware = require('node-sass-middleware');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -21,15 +22,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(
+    middleware({
+        src: __dirname + '/sass', // where the sass files are 
+        dest: __dirname + '/public', // where css should go
+        debug: true
+    })
+);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-// POST /api/users gets JSON bodies
-app.post('/api/users', function (req, res) {
-    console.log('req.body', req.body);
-  if (!req.body) return res.sendStatus(400);
-  // create user in req.body
-});
 
 app.use('/', routes);
 app.use('/users', users);
