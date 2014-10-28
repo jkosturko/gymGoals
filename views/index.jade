@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1=title
+  p October Week 1
+
+  ul
+    each val, index in {'M':'one','T':'two','W':'three', 'R':'true', 'F': 'true', 'S': 'true', 'Su': 'false'}
+      li.button= index + ': ' + val      
