@@ -9,6 +9,7 @@ var middleware = require('node-sass-middleware');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var weeks = require('./routes/weeks');
+var week = require('./routes/week');
 
 var app = express();
 
@@ -33,10 +34,10 @@ app.use(
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/weeks', weeks);
+app.use('/weeks/:id', week);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

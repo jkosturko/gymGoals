@@ -6,7 +6,6 @@ var db = require('../database');
 router.get('/', function(req, res) {
 	db.weeks.find(function(err, weeks){
 		var data = JSON.stringify(weeks);
-		console.log('data', data);
 	  	res.render('index', { 
   			title: 'Per Week', 
   			appData: data

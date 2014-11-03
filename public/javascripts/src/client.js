@@ -11,7 +11,7 @@
 
 	var WeekView = Backbone.View.extend({
 		events: {
-			// "click .name" : "singleWeekLink" ///check this why repeat
+			"click .name" : "singleWeekLink" ///check this why repeat
 		},
 		tagName: 'li',
 		className: 'week',
@@ -22,23 +22,21 @@
 			this.$el.html(html);
 			return this;
 		},
-		singleWeekLink: function () { 
+		singleWeekLink: function (e) { 
 			var id = this.model.get('_id');
 			router.navigate("week/" + id, {trigger: true});
+			e.preventDefault();
 		}
 	});
 
 	var DetailedWeekView = Backbone.View.extend({
 		initialize: function () {
-			console.log('model', this.model)
 			// this.listenTo(this.model, 'change', this.render);
 		},		
 		render: function () {
-			console.log('Rendering Detailed week view')
 			var template = $('#detailtemplate').html();
 			var compiled = Handlebars.compile(template);
 			var html = compiled(this.model.attributes);
-			console.log('mymodel',this.model);
 
 			this.$el.html(html);
 			return this;
@@ -47,12 +45,11 @@
 
 	var WeekCollectionView = Backbone.View.extend({
 		initialize: function () {
-			this.listenTo(this.collection, 'reset', this.render);
+			this.listenTo(this.collection, 'reset', this.render());
 		},
 		tagName: 'ul',
 		className: 'weeks',
 		render: function () {
-			console.log('rendering WeekCollectionView');
 			this.$el.html('');
 			this.collection.each(function (week) {
 				weekView = new WeekView({ model: week });
@@ -91,7 +88,6 @@ var collection;
 			this._renderView(view);
 		},
 		singleWeek: function (id) {
-			console.log('this.collection', this.collection);
 			var week = this.collection.get(id);
 			var view = new DetailedWeekView({model: week});
 			this._renderView(view);
