@@ -35,3 +35,6 @@
   list-style-type: none; }
   .weeks .week {
     margin: 10px 0; }
+
+#initialContent {
+  display: none; }

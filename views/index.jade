@@ -2,9 +2,13 @@ extends layout
 
 block content
   h1 Per Week App
+  p Goal 4x per Week
+  div.app
+
+  div#initialContent=appData
 
   script(type="text/x-handlebars", id="weektemplate")
-    {{title}} 
+    a(href='#' class='name') {{title}} 
 
     //- Output if the button is pressed or not 
     {{#each data}}
@@ -18,3 +22,7 @@ block content
     {{#if completed}}
     i.icon-check
     {{/if}}
+
+  script(type="text/x-handlebars", id="detailtemplate")
+    p This is the week View {{title}}
+    p Completed {{completed}}

@@ -25,7 +25,7 @@ app.use(cookieParser());
 
 app.use(
     middleware({
-        src: __dirname + '/sass', // where the sass files are 
+        src: __dirname + '/public/sass', // where the sass files are 
         dest: __dirname + '/public', // where css should go
         debug: true
     })
