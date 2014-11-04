@@ -23,12 +23,7 @@
 	});
 
 	//I wish each button had an id, so button/:id would work
-	var ButtonView = Backbone.View.extend({
-		initialize: function () {
-			// console.log('this.index', this.index)
-			// console.log('view att', this.attributes);
-			// this.model.set({attributes: index});
-		},		
+	var ButtonView = Backbone.View.extend({	
 		events: {
 			"click .button" : 'pressButton'
 		},
@@ -38,12 +33,11 @@
 			var template = $('#buttontemplate').html();
 			var compiled = Handlebars.compile(template);
 			var html = compiled(this.model);
-			console.log('this.mode', this.model)
 			this.$el.html(html);
 			return this;	
 		},
 		pressButton: function (e) {
-			console.log('mymodel', mymodel);
+			console.log('mymodel', this.model.attributes);
 			var myData = this.model.set({checked: false})
 		},	
 
@@ -103,15 +97,10 @@
 
 			// Maybe implement a caching solution here
 			// Jquery wasn't loaded yet
-			// var data = document.getElementById('initialContent').innerHTML;
-			// var json = JSON.parse(data);
-			// this.collection = new WeekCollection(JSON.parse(data));
-
-
-			var data = document.getElementById('weekContent').innerHTML;
+			var data = document.getElementById('initialContent').innerHTML;
 			var json = JSON.parse(data);
-			console.log('data', data)
-			this.collectionDays = new WeekCollection(JSON.parse(data));			
+			this.collection = new WeekCollection(JSON.parse(data));
+			collection = this.collection;		
 		},
 		_renderView: function (view) {
 			$('.app').html(view.render().el);
@@ -125,8 +114,7 @@
 			this._renderView(view);
 		},
 		singleWeek: function (id) {
-			console.log('singleweek', this.collectionDays)
-			var view = new WeekView({collection: this.collectionDays});
+			var view = new WeekView({collection: this.collection});
 			this._renderView(view);
 		}
 	});	

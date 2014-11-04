@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	h1
+		a(href='#') Per Week App
+	p Goal 4x per Week - week.jade template
+	div.app
+
+	div#initialContent=appData
+
+
+	script(type="text/x-handlebars", id="weektemplate")
+		
+		a(href='#' class='name') {{title}} 
+
+	script(type="text/x-handlebars", id="buttontemplate")
+		{{#each data}}
+		{{@key}} {{@index}} {{checked}}
+		{{#if checked}}
+		span.button.pressed {{day}}
+		{{else}}
+		span.button {{day}}
+		{{/if}}		
+		{{/each}}

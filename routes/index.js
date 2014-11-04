@@ -26,7 +26,7 @@ router.get('/weeks/:id', function(req, res) {
 		// res.json(data);
 	  	res.render('week', { 
   			title: 'Per Week', 
-  			weekData: data
+  			appData: data
   		});
     });
 });

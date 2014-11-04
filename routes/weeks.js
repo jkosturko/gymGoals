@@ -24,24 +24,24 @@ router.get('/weeks/:id/data', function(req, res) {
 });
 
 //Not sure why this doesn't work
-// /* Writing Week data to week page */
-// router.get('/weeks/:id', function(req, res) {
-// 	var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
-//     db.weeks.findOne({"_id": weekId}, function(err, week) {
-//         if (err) console.log('Error finding weeks in db');
-//         var data = JSON.stringify(week.data);
-//         console.log('week', week.data);
+/* Writing Week data to week page */
+router.get('/weeks/:id', function(req, res) {
+	var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
+    db.weeks.findOne({"_id": weekId}, function(err, week) {
+        if (err) console.log('Error finding weeks in db');
+        var data = JSON.stringify(week.data);
+        console.log('week', week.data);
 
-// 		res.json(data);
-// 	  	// res.render('week', { 
-//   		// 	title: 'Per Week', 
-//   		// 	weekData: data
-//   		// });
-//     });
-// });
+		// res.json(data);
+	  	res.render('week', { 
+  			title: 'Per Week', 
+  			appData: data
+  		});
+    });
+});
 
 /* GET weeks listing. */
-router.get('/', function(req, res) {
+router.get('/weeks', function(req, res) {
     db.weeks.find(function(err, weeks) {
         if (err) console.log('Error finding weeks in db');
         res.json(weeks);

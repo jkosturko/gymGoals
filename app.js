@@ -9,7 +9,7 @@ var middleware = require('node-sass-middleware');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var weeks = require('./routes/weeks');
-var week = require('./routes/week');
+// var week = require('./routes/week');
 
 var app = express();
 
@@ -35,8 +35,9 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', users);
+app.use('/weeks/:id', weeks);
 app.use('/weeks', weeks);
-app.use('/weeks/:id', week);
+
 app.use('/', routes);
 
 
