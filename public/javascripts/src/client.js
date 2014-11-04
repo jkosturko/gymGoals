@@ -16,41 +16,23 @@
 		},
 		urlRoot: '/weeks/data',
 
-		toggleChecked: function () {
+		toggleChecked: function (i) {
 			var dataObj = this.get( "data" );
-			var checked = dataObj[0]['checked'];
 
-			dataObj[0]['checked'] = !(dataObj[0]['checked']);
-
-		    console.log('checked', checked)
-		    checked = 'fluffy'/!checked;
-		    console.log('checked', checked)
-		    console.log('dataObj', dataObj)
-
-		    console.log('dataObj', dataObj);
+			dataObj[i]['checked'] = !(dataObj[i]['checked']);
 		    this.unset( "data", { silent: true } );
 		    this.set( "data", dataObj );			
-
-
-			 //    model.set( "arrayProp", [1, 2, 3] );
-    // arr = model.get( "arrayProp" );
-    // arr.push( 4 );
-
-    
-    // model.set( "arrayProp", arr );
-			// this.save();
-			console.log('this', this)
 		}
 	});
 
 	// Create a Single Button
-	var ButtonView = Backbone.View.extend({	
+	var ButtonView = Backbone.View.extend({
 		tagName: 'li',
 		className: 'button presser',
 		render: function () {	
 			var template = $('#buttontemplate').html();
 			var compiled = Handlebars.compile(template);
-			var html = compiled(this.model);
+			var html = compiled(this.model, this.options);
 			this.$el.html(html);
 			return this;	
 		}
@@ -61,7 +43,6 @@
 	var DetailView = Backbone.View.extend({
 		initialize: function (options) {
 			this.model = options.model;
-			console.log('this.model', this.model)
 			this.listenTo(this.model, 'change', this.render);
 		},
 		tagName: 'ul',
@@ -72,15 +53,16 @@
 			console.log('rendering')
 			this.$el.html('');
 			_.each(this.model.attributes.data,function(day, i) {
-				dayView = new ButtonView({ model: day});
+				dayView = new ButtonView({ model: day, index: i});
 				this.$el.append(dayView.render().el);
 			}, this);
 
 			return this;			
 		},
-		pressButton: function () {
-			console.log('you pressed the button on Detail View!')
-			this.model.toggleChecked();
+		pressButton: function (e) {
+			var $item = $(e.currentTarget).closest('li');
+        	var	index = $item.index();
+			this.model.toggleChecked(index);
 		}		
 	});
 
@@ -95,7 +77,7 @@
 		render: function () {
 			var template = $('#weektemplate').html();
 			var compiled = Handlebars.compile(template);
-			var html = compiled(this.model.attributes);
+			var html = compiled(this.model.attributes );
 			this.$el.html('');
 			this.$el.html(html);
 
@@ -154,12 +136,8 @@
 		singleWeek: function (id) {
 			this.model = new Day({id: id}) //think of naming here //siletn true is bad here
 			this.model.fetch();
-			model =this.model;
 
 			var view = new DetailView({model: this.model});
 			this._renderView(view);			
 		}
 	});	
-
-
-	this.listenTo(this.model, "change", alert('model changed'));

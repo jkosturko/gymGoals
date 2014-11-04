@@ -7,6 +7,7 @@ block content
 
 	div#initialContent=appData
 	div#weekContent=weekData
+	p Testing
 	div.app
 
 
@@ -22,8 +23,9 @@ block content
 
 
 	script(type="text/x-handlebars", id="buttontemplate")
+		{{index}}
 		{{#if checked}}
-		span.button.pressed {{day}}
+		span.button.pressed(data-attr="bea") {{day}}
 		{{else}}
-		span.button {{day}}
+		span.button(data-attr="bea") {{day}}
 		{{/if}}		
