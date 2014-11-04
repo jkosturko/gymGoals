@@ -1,5 +1,6 @@
 //temporarily global for debugging
 $(function () {
 	window.router = new AppRouter();
-	Backbone.history.start();
+	Backbone.history.start({pushState: true});
+	// Backbone.history.start();
 });

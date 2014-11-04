@@ -34,10 +34,11 @@ app.use(
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
 app.use('/users', users);
 app.use('/weeks', weeks);
 app.use('/weeks/:id', week);
+app.use('/', routes);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
