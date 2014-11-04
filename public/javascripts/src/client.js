@@ -10,14 +10,24 @@
 		url: "/weeks",
 	});
 
+	var Day = Backbone.Model.extend({
+		initialize: function (options) {
+			this.id = options.id
+			// console.log('this.id', this.id)
+			console.log('this', this)
+		},
+		urlRoot: '/weeks/data'
+	});
+
 	//I wish each button had an id, so button/:id would work
 	var ButtonView = Backbone.View.extend({	
 		tagName: 'li',
-		className: 'button',
+		className: 'button presser',
 		render: function () {	
+			console.log('this.modelbutton', this.model.attributes)
 			var template = $('#buttontemplate').html();
 			var compiled = Handlebars.compile(template);
-			var html = compiled(this.model.attributes);
+			var html = compiled(this.model);
 			this.$el.html(html);
 			return this;	
 		}
@@ -27,17 +37,17 @@
 	// into a specific week
 	var DetailView = Backbone.View.extend({
 		initialize: function (options) {
-			this.models = options.collection;
-			console.log('DETAIL VIEW WAS TRIGGERED', this.models)
+			this.model = options.model;
+			this.listenTo(this.model, 'change', this.render);
 		},
 		tagName: 'ul',
 		events: {
-			"click .button" : "pressButton"
+			"click .presser" : "pressButton"
 		},
 		render: function () {
 			this.$el.html('');
-			this.models.each(function(model) {
-				dayView = new ButtonView({ model: model});
+			_.each(this.model.attributes,function(day, i) {
+				dayView = new ButtonView({ model: day});
 				this.$el.append(dayView.render().el);
 			}, this);
 
@@ -90,6 +100,8 @@
 			return this;
 		}
 	});
+
+	var collection, model;
 	var AppRouter = Backbone.Router.extend({
 		initialize: function () {
 			this._setupCollection();
@@ -100,7 +112,7 @@
 
 			// Maybe implement a caching solution here
 			// Jquery wasn't loaded yet
-			var data = document.getElementById('initialContent').innerHTML;
+			var data = $('#initialContent').html()
 			this.collection = new WeekCollection(JSON.parse(data));
 		},
 		_renderView: function (view) {
@@ -115,7 +127,10 @@
 			this._renderView(view);
 		},
 		singleWeek: function (id) {
-			var view = new DetailView({collection: this.collection});
-			this._renderView(view);
+			this.model = new Day({id: id}) //think of naming here //siletn true is bad here
+			this.model.fetch();
+
+			var view = new DetailView({model: this.model});
+			this._renderView(view);			
 		}
 	});	

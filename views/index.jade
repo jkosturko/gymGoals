@@ -6,7 +6,6 @@ block content
 	p Goal 4x per Week
 
 	div#initialContent=appData
-
 	div#weekContent=weekData
 	div.app
 
@@ -23,7 +22,6 @@ block content
 
 
 	script(type="text/x-handlebars", id="buttontemplate")
-		p button index
 		{{#if checked}}
 		span.button.pressed {{day}}
 		{{else}}

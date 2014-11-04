@@ -21,7 +21,7 @@ router.get('/weeks', function(req, res) {
 });
 
 /* GET weeks listing. */
-router.get('/weeks/:id/data', function(req, res) {
+router.get('/weeks/data/:id', function(req, res) {
 	console.log('You are here with an id!!!')
 	var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
     db.weeks.findOne({"_id": weekId}, function(err, week) {
@@ -35,18 +35,27 @@ router.get('/weeks/:id/data', function(req, res) {
 //Not sure why this doesn't work
 /* Writing Week data to week page */
 router.get('/weeks/:id', function(req, res) {
-	var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
-    db.weeks.findOne({"_id": weekId}, function(err, week) {
-        if (err) console.log('Error finding weeks in db');
-        var data = JSON.stringify(week.data);
-        console.log('week', week.data);
+	// var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
+ //    db.weeks.findOne({"_id": weekId}, function(err, week) {
+ //        if (err) console.log('Error finding weeks in db');
+ //        var data = JSON.stringify(week.data);
+ //        console.log('week', week.data);
+ //        console.log('week view! from week', kata)
+	// 	// res.json(data);
+	//   	res.render('week', { 
+ //  			title: 'Per Week', 
+ //  			weekData: data
+ //  		});
+ //    });
 
-		// res.json(data);
+	db.weeks.find(function(err, weeks){
+		var data = JSON.stringify(weeks);
+
 	  	res.render('week', { 
   			title: 'Per Week', 
   			appData: data
   		});
-    });
+	});
 });
 
 
