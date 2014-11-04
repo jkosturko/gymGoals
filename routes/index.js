@@ -85,9 +85,22 @@ router.get('/weeks/data/:id', function(req, res) {
 	var weekId = db.ObjectId(req.params.id);  //video 3? Rewatch
     db.weeks.findOne({"_id": weekId}, function(err, week) {
         if (err) console.log('Error finding weeks in db');
-        res.json(week.data);
+        res.json(week);
     });
 });
 
+
+//When I click a button, it updates the checked status
+router.put('/weeks/data/:id', function(req, res) {
+	var weekId = db.ObjectId(req.params.id);
+	db.weeks.update({"_id": weekId}, {$set:{data:req.body.data}});
+});
+
+// When Post request is made to app, save
+// json to database 
+router.post('/weeks', function(req, res) {
+    db.weeks.save(req.body);
+    res.send(req.body);
+});
 
 module.exports = router;
