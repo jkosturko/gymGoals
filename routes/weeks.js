@@ -11,6 +11,15 @@ var router = express.Router();
 //   res.send('respond with a resource');
 // });
 
+
+/* GET weeks listing. */
+router.get('/weeks', function(req, res) {
+    db.weeks.find(function(err, weeks) {
+        if (err) console.log('Error finding weeks in db');
+        res.json(weeks);
+    });
+});
+
 /* GET weeks listing. */
 router.get('/weeks/:id/data', function(req, res) {
 	console.log('You are here with an id!!!')
@@ -40,13 +49,7 @@ router.get('/weeks/:id', function(req, res) {
     });
 });
 
-/* GET weeks listing. */
-router.get('/weeks', function(req, res) {
-    db.weeks.find(function(err, weeks) {
-        if (err) console.log('Error finding weeks in db');
-        res.json(weeks);
-    });
-});
+
 
 // /* GET weeks listing. */
 // router.get('/weeks', function(req, res) {

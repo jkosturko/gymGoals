@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', users);
 app.use('/weeks/:id', weeks);
 app.use('/weeks', weeks);
-
 app.use('/', routes);
 
 
